@@ -81,11 +81,17 @@ class ImageSlider @JvmOverloads constructor(
         titleBackground = typedArray.getResourceId(R.styleable.ImageSlider_iss_title_background, R.drawable.gradient)
 
         if (typedArray.getString(R.styleable.ImageSlider_iss_text_align) != null){
-            textAlign = typedArray.getString(R.styleable.ImageSlider_iss_text_align)
+            val data = typedArray.getString(R.styleable.ImageSlider_iss_text_align)
+            if (data != null) {
+                textAlign = data
+            }
         }
 
         if (typedArray.getString(R.styleable.ImageSlider_iss_indicator_align) != null){
-            indicatorAlign = typedArray.getString(R.styleable.ImageSlider_iss_indicator_align)
+            val data = typedArray.getString(R.styleable.ImageSlider_iss_indicator_align)
+            if (data != null) {
+                indicatorAlign = data
+            }
         }
 
         if (touchListener != null){

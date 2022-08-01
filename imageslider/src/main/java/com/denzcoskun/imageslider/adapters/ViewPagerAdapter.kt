@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso
  * denzcoskun@hotmail.com
  * İstanbul
  */
-class ViewPagerAdapter(context: Context?,
+class ViewPagerAdapter(private val context: Context?,
                        imageList: List<SlideModel>,
                        private var radius: Int,
                        private var errorImage: Int,
@@ -66,24 +66,24 @@ class ViewPagerAdapter(context: Context?,
 
         // Image from url or local path check.
         val loader = if (imageList!![position].imageUrl == null){
-            Picasso.get().load(imageList!![position].imagePath!!)
+            PicassoTrustAll.getInstance(context!!)?.load(imageList!![position].imagePath!!)
         }else{
-            Picasso.get().load(imageList!![position].imageUrl!!)
+            PicassoTrustAll.getInstance(context!!)?.load(imageList!![position].imageUrl!!)
         }
 
         // set Picasso options.
         if ((scaleType != null && scaleType == ScaleTypes.CENTER_CROP) || imageList!![position].scaleType == ScaleTypes.CENTER_CROP){
-            loader.fit().centerCrop()
+            loader?.fit()?.centerCrop()
         } else if((scaleType != null && scaleType == ScaleTypes.CENTER_INSIDE) || imageList!![position].scaleType == ScaleTypes.CENTER_INSIDE){
-            loader.fit().centerInside()
+            loader?.fit()?.centerInside()
         }else if((scaleType != null && scaleType == ScaleTypes.FIT) || imageList!![position].scaleType == ScaleTypes.FIT){
-            loader.fit()
+            loader?.fit()
         }
 
-        loader.transform(RoundedTransformation(radius, 0))
-            .placeholder(placeholder)
-            .error(errorImage)
-            .into(imageView)
+        loader?.transform(RoundedTransformation(radius, 0))
+            ?.placeholder(placeholder)
+            ?.error(errorImage)
+            ?.into(imageView)
 
         container.addView(itemView)
 
