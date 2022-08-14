@@ -8,7 +8,6 @@ import okhttp3.OkHttpClient
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
@@ -51,7 +50,8 @@ class PicassoTrustAll private constructor(context: Context) {
             val sc: SSLContext = SSLContext.getInstance("TLS")
             sc.init(null, trustAllCerts, SecureRandom())
             client = OkHttpClient.Builder()
-                .hostnameVerifier(HostnameVerifier { hostname, session -> true }).sslSocketFactory(sc.getSocketFactory(), trustAllCerts[0] as X509TrustManager)
+                .hostnameVerifier { _, _ -> true }
+                .sslSocketFactory(sc.socketFactory, trustAllCerts[0] as X509TrustManager)
                 .build()
         } catch (e: Exception) {
             e.printStackTrace()
